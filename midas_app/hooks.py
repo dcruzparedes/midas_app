@@ -5,6 +5,8 @@ app_description = "Generador de Propuestas"
 app_email = "corpmidas33@gmail.com"
 app_license = "mit"
 
+fixtures = ["Custom Field", "Property Setter", "Client Script", "Server Script"]
+
 # Apps
 # ------------------
 
