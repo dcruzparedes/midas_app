@@ -1,0 +1,192 @@
+<style>
+	* { box-sizing: border-box; }
+	body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #222; font-size: 13px; line-height: 1.5; }
+	.company { font-size: 24px; font-weight: bold; color: #1a5276; text-align: center; }
+	.tagline { text-align: center; color: #555; margin-bottom: 6px; }
+	.doc-title { font-size: 18px; font-weight: bold; text-align: center; letter-spacing: 2px; margin: 16px 0; text-transform: uppercase; }
+	.meta { margin-bottom: 16px; }
+	.meta td { border: none; padding: 2px 4px; }
+	.section-title { font-size: 14px; font-weight: bold; margin: 22px 0 6px; text-transform: uppercase; border-bottom: 1px solid #999; padding-bottom: 3px; }
+	table.data { width: 100%; border-collapse: collapse; margin: 8px 0; }
+	table.data th, table.data td { border: 1px solid #bbb; padding: 5px 8px; text-align: left; }
+	table.data th { background: #eef2f6; font-weight: bold; }
+	ul { margin: 6px 0 6px 20px; }
+	.signature { width: 100%; margin-top: 70px; }
+	.signature td { border: none; width: 50%; text-align: center; padding-top: 8px; }
+	.signature .line { border-top: 1px solid #000; margin: 0 50px; }
+	.signature .name { font-weight: bold; margin-top: 4px; }
+	.logo { position: fixed; top: 20px; right: 20px; width: 100px; }
+</style>
+
+<img class="logo" src="/assets/midas_app/images/logo_midas.jpg" />
+
+<div class="company">Corporación Midas</div>
+<div class="tagline">Soluciones Solares Fotovoltaicas &mdash; Modelo EPC</div>
+<div class="doc-title">Carta de Presentación</div>
+
+<table class="meta">
+	<tr>
+		<td><strong>Cliente:</strong> {{ doc.customer_name }}</td>
+		<td><strong>Ubicación:</strong> {{ doc.project_location or "" }}{% if doc.project_department %}, {{ doc.project_department }}{% endif %}</td>
+		<td><strong>Fecha:</strong> {{ doc.get_formatted("proposal_date") }}</td>
+	</tr>
+</table>
+
+<p>Por medio de la presente, nos complace presentar a <strong>Corporación Midas</strong>, una empresa
+especializada en el desarrollo integral de proyectos solares fotovoltaicos bajo el modelo EPC
+(Ingeniería, Procura y Construcción). Nos dirigimos a usted con el objetivo de ofrecerle una solución
+energética sostenible, eficiente y adaptada a las necesidades específicas de su empresa.</p>
+
+<p>Se detalla a continuación las características principales del sistema fotovoltaico propuesto:</p>
+
+<table class="data">
+	<tr><td>Capacidad del sistema</td><td>{{ "{:,.2f}".format(doc.dc_power or 0) }} kWp</td></tr>
+	<tr><td>Potencia en inversores</td><td>{{ "{:,.2f}".format(doc.ac_power or 0) }} kWac</td></tr>
+	<tr><td>Energía Generada</td><td>{{ "{:,.2f}".format(doc.energy_generated or 0) }} kWh</td></tr>
+	<tr><td>% de energía ahorrada al año</td><td>{{ doc.get_formatted("coverage_pct") }}</td></tr>
+	<tr><td>Valor de la inversión (USD)</td><td>{{ doc.get_formatted("investment_cost") }}</td></tr>
+	<tr><td>Periodo de recuperación</td><td>{{ "{:,.2f}".format(doc.payback_period or 0) }} años</td></tr>
+	<tr><td>Puesta en marcha</td><td>{{ doc.commissioning_months or 0 }} mes(es) después de aceptación de oferta</td></tr>
+</table>
+
+<p>Agradecemos de antemano su atención e interés. Quedamos atentos a su confirmación para coordinar una
+reunión o visita técnica, según lo considere conveniente.</p>
+
+<p>Reciba un cordial saludo,</p>
+
+<div class="section-title">Implantación del Proyecto</div>
+<p>Como parte del proceso de evaluación energética y con el objetivo de identificar oportunidades de
+ahorro y sostenibilidad, se presenta a continuación una propuesta preliminar para la implantación del
+sistema solar fotovoltaico mencionado en las instalaciones de <strong>{{ doc.customer_name }}</strong>
+{% if doc.project_location %}en {{ doc.project_location }}{% endif %}{% if doc.project_department %}, {{ doc.project_department }}{% endif %}.</p>
+
+<div class="section-title">Equipos Principales del Sistema</div>
+
+{% set modulos = doc.equipment | selectattr('equipment_type', 'equalto', 'Módulo Fotovoltaico') | list %}
+{% set inversores = doc.equipment | selectattr('equipment_type', 'equalto', 'Inversor') | list %}
+
+{% if modulos %}
+<p><strong>Módulos Fotovoltaicos</strong></p>
+<table class="data">
+	<thead>
+		<tr><th>Modelo</th><th>Cantidad</th><th>Potencia</th><th>Potencia Total</th></tr>
+	</thead>
+	<tbody>
+		{% for e in modulos %}
+		<tr>
+			<td>{{ e.model or "" }}</td>
+			<td>{{ "{:,.0f}".format(e.quantity or 0) }}</td>
+			<td>{{ "{:,.2f}".format(e.unit_power or 0) }} {{ e.unit or "" }}</td>
+			<td>{{ "{:,.2f}".format(e.total_power or 0) }} {{ e.unit or "" }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+
+{% if inversores %}
+<p><strong>Inversores</strong></p>
+<table class="data">
+	<thead>
+		<tr><th>Modelo</th><th>Cantidad</th><th>Potencia</th><th>Potencia Total</th><th>Voltaje</th></tr>
+	</thead>
+	<tbody>
+		{% for e in inversores %}
+		<tr>
+			<td>{{ e.model or "" }}</td>
+			<td>{{ "{:,.0f}".format(e.quantity or 0) }}</td>
+			<td>{{ "{:,.2f}".format(e.unit_power or 0) }} {{ e.unit or "" }}</td>
+			<td>{{ "{:,.2f}".format(e.total_power or 0) }} {{ e.unit or "" }}</td>
+			<td>{{ e.voltage or "" }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+
+<div class="section-title">Resultados Técnicos del Análisis</div>
+<p><strong>Comportamiento Energético del Sistema</strong></p>
+<table class="data">
+	<tr><td>Potencia</td><td>{{ "{:,.2f}".format(doc.dc_power or 0) }} kWp</td></tr>
+	<tr><td>Potencia Nominal</td><td>{{ "{:,.2f}".format(doc.ac_power or 0) }} kWac</td></tr>
+	<tr><td>Consumo anual</td><td>{{ "{:,.2f}".format(doc.annual_consumption or 0) }} kWh</td></tr>
+	<tr><td>Energía Generada anual (1er año)</td><td>{{ "{:,.2f}".format(doc.energy_generated or 0) }} kWh</td></tr>
+	<tr><td>Energía Inyectada</td><td>{{ "{:,.2f}".format(doc.energy_injected or 0) }} kWh</td></tr>
+	<tr><td>Energía Autoconsumida</td><td>{{ "{:,.2f}".format(doc.energy_self_consumed or 0) }} kWh</td></tr>
+	<tr><td>% de cobertura</td><td>{{ doc.get_formatted("coverage_pct") }}</td></tr>
+	<tr><td>% de inyección a red</td><td>{{ doc.get_formatted("injection_pct") }}</td></tr>
+</table>
+
+<p><strong>Datos del Cliente</strong></p>
+<table class="data">
+	<tr><td>Consumo Anual</td><td>{{ "{:,.2f}".format(doc.annual_consumption or 0) }} kWh</td></tr>
+	<tr><td>Consumo promedio mensual</td><td>{{ "{:,.2f}".format(doc.monthly_consumption or 0) }} kWh</td></tr>
+	<tr><td>Pico de demanda</td><td>{{ "{:,.2f}".format(doc.peak_demand or 0) }} kW</td></tr>
+	<tr><td>Tarifa</td><td>{{ doc.tariff_type or "" }}</td></tr>
+</table>
+
+<div class="section-title">Resultados Financieros del Análisis</div>
+<p><strong>Resumen Económico</strong></p>
+<table class="data">
+	<tr><td>Costo Unitario</td><td>{{ "{:,.3f}".format(doc.unit_cost or 0) }} $/Wp</td></tr>
+	<tr><td>Costo Total de la inversión</td><td>{{ doc.get_formatted("investment_cost") }}</td></tr>
+	<tr><td>Ahorro neto (1er año)</td><td>{{ doc.get_formatted("annual_savings_usd") }}</td></tr>
+	<tr><td>Valor presente Neto (VPN)</td><td>{{ doc.get_formatted("npv") }}</td></tr>
+	<tr><td>Periodo de Repago</td><td>{{ "{:,.2f}".format(doc.payback_period or 0) }} años</td></tr>
+	<tr><td>Periodo de análisis</td><td>{{ doc.analysis_period or 0 }} años</td></tr>
+	<tr><td>Tasa Interna de Retorno</td><td>{{ doc.get_formatted("irr") }}</td></tr>
+</table>
+
+<p><strong>Consideraciones Financieras</strong></p>
+<table class="data">
+	<tr><td>Intereses</td><td>{{ doc.get_formatted("interest_rate") }}</td></tr>
+	<tr><td>Inflación</td><td>{{ doc.get_formatted("inflation") }}</td></tr>
+	<tr><td>Costo de la energía</td><td>{{ "{:,.4f}".format(doc.energy_cost or 0) }} $/kWh</td></tr>
+	<tr><td>O&amp;M anual unitario</td><td>{{ "{:,.2f}".format(doc.om_annual_unit or 0) }} $/kWp</td></tr>
+	<tr><td>Costo total de O&amp;M anual</td><td>{{ doc.get_formatted("om_annual_total") }}</td></tr>
+	<tr><td>Periodo de análisis</td><td>30 años</td></tr>
+</table>
+
+<div class="section-title">Entregables del Proyecto</div>
+<ul>
+{% for line in (doc.deliverables or "").splitlines() if line.strip() %}
+	<li>{{ line }}</li>
+{% endfor %}
+</ul>
+
+<div class="section-title">Garantías de Componentes</div>
+<ul>
+{% for line in (doc.warranties or "").splitlines() if line.strip() %}
+	<li>{{ line }}</li>
+{% endfor %}
+</ul>
+
+<div class="section-title">Consideraciones</div>
+<ul>
+{% for line in (doc.considerations or "").splitlines() if line.strip() %}
+	<li>{{ line }}</li>
+{% endfor %}
+</ul>
+
+<div class="section-title">Exclusiones</div>
+<ul>
+{% for line in (doc.exclusions or "").splitlines() if line.strip() %}
+	<li>{{ line }}</li>
+{% endfor %}
+</ul>
+
+<div class="section-title">Condiciones de Pago y Aceptación de Oferta</div>
+{% if doc.payment_conditions %}
+<ul>
+{% for line in doc.payment_conditions.splitlines() if line.strip() %}
+	<li>{{ line }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<table class="signature">
+	<tr>
+		<td><div class="line"></div><div class="name">Gerente General<br>Corporación Midas</div></td>
+		<td><div class="line"></div><div class="name">Gerente General<br>{{ doc.customer_name }}</div></td>
+	</tr>
+</table>

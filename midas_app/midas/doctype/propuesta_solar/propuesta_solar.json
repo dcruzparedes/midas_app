@@ -1,0 +1,416 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-08-24 00:00:00.000000",
+ "default_print_format": "Propuesta Solar",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "quotation",
+  "customer",
+  "customer_name",
+  "proposal_date",
+  "project_name",
+  "project_location",
+  "project_department",
+  "section_consumo",
+  "monthly_consumption",
+  "annual_consumption",
+  "peak_demand",
+  "tariff_type",
+  "voltage_type",
+  "desired_savings",
+  "section_panel",
+  "panel_power",
+  "panel_size",
+  "panel_price",
+  "section_resultados_tecnicos",
+  "dc_power",
+  "ac_power",
+  "energy_generated",
+  "energy_injected",
+  "energy_self_consumed",
+  "coverage_pct",
+  "injection_pct",
+  "required_area",
+  "panel_quantity",
+  "section_resultados_financieros",
+  "unit_cost",
+  "investment_cost",
+  "annual_savings_usd",
+  "npv",
+  "payback_period",
+  "analysis_period",
+  "irr",
+  "section_consideraciones_financieras",
+  "interest_rate",
+  "inflation",
+  "energy_cost",
+  "om_annual_unit",
+  "om_annual_total",
+  "commissioning_months",
+  "section_equipos",
+  "equipment",
+  "section_documento",
+  "deliverables",
+  "warranties",
+  "considerations",
+  "exclusions",
+  "payment_conditions"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "PROP-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "label": "Cotización",
+   "options": "Quotation"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Cliente",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Nombre del Cliente",
+   "fetch_from": "customer.customer_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "proposal_date",
+   "fieldtype": "Date",
+   "label": "Fecha de Propuesta"
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Nombre del Proyecto"
+  },
+  {
+   "fieldname": "project_location",
+   "fieldtype": "Data",
+   "label": "Ubicación del Proyecto"
+  },
+  {
+   "fieldname": "project_department",
+   "fieldtype": "Select",
+   "label": "Departamento",
+   "options": "Atlántida\nCholuteca\nColón\nComayagua\nCopán\nCortés\nEl Paraíso\nFrancisco Morazán\nGracias a Dios\nIntibucá\nIslas de la Bahía\nLa Paz\nLempira\nOcotepeque\nOlancho\nSanta Bárbara\nValle\nYoro"
+  },
+  {
+   "fieldname": "section_consumo",
+   "fieldtype": "Section Break",
+   "label": "Consumo y Tarifa"
+  },
+  {
+   "fieldname": "monthly_consumption",
+   "fieldtype": "Float",
+   "label": "Consumo Mensual (kWh)"
+  },
+  {
+   "fieldname": "annual_consumption",
+   "fieldtype": "Float",
+   "label": "Consumo Anual (kWh)"
+  },
+  {
+   "fieldname": "peak_demand",
+   "fieldtype": "Float",
+   "label": "Pico de Demanda (kW)"
+  },
+  {
+   "fieldname": "tariff_type",
+   "fieldtype": "Select",
+   "label": "Tarifa Eléctrica",
+   "options": "Residencial\nBaja Tensión\nMedia Tensión\nAlta Tensión"
+  },
+  {
+   "fieldname": "voltage_type",
+   "fieldtype": "Select",
+   "label": "Voltaje",
+   "options": "Trifásico\nMonofásico"
+  },
+  {
+   "fieldname": "desired_savings",
+   "fieldtype": "Percent",
+   "label": "% Ahorro Deseado"
+  },
+  {
+   "fieldname": "section_panel",
+   "fieldtype": "Section Break",
+   "label": "Parámetros del Panel Solar"
+  },
+  {
+   "fieldname": "panel_power",
+   "fieldtype": "Float",
+   "label": "Potencia del Panel (W)",
+   "default": "630"
+  },
+  {
+   "fieldname": "panel_size",
+   "fieldtype": "Float",
+   "label": "Tamaño del Panel (m²)",
+   "default": "2.623"
+  },
+  {
+   "fieldname": "panel_price",
+   "fieldtype": "Float",
+   "label": "Precio Promedio ($/Wp)",
+   "default": "0.75"
+  },
+  {
+   "fieldname": "section_resultados_tecnicos",
+   "fieldtype": "Section Break",
+   "label": "Resultados Técnicos"
+  },
+  {
+   "fieldname": "dc_power",
+   "fieldtype": "Float",
+   "label": "Potencia DC (kWp)",
+   "read_only": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "ac_power",
+   "fieldtype": "Float",
+   "label": "Potencia AC (kWac)",
+   "read_only": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "energy_generated",
+   "fieldtype": "Float",
+   "label": "Energía Generada Anual (kWh)",
+   "read_only": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "energy_injected",
+   "fieldtype": "Float",
+   "label": "Energía Inyectada (kWh)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "energy_self_consumed",
+   "fieldtype": "Float",
+   "label": "Energía Autoconsumida (kWh)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "coverage_pct",
+   "fieldtype": "Percent",
+   "label": "% de Cobertura",
+   "read_only": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "injection_pct",
+   "fieldtype": "Percent",
+   "label": "% de Inyección a Red",
+   "precision": "2"
+  },
+  {
+   "fieldname": "required_area",
+   "fieldtype": "Float",
+   "label": "Área Requerida (m²)",
+   "read_only": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "panel_quantity",
+   "fieldtype": "Int",
+   "label": "Cantidad de Paneles",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_resultados_financieros",
+   "fieldtype": "Section Break",
+   "label": "Resultados Financieros"
+  },
+  {
+   "fieldname": "unit_cost",
+   "fieldtype": "Float",
+   "label": "Costo Unitario ($/Wp)",
+   "precision": "3"
+  },
+  {
+   "fieldname": "investment_cost",
+   "fieldtype": "Currency",
+   "label": "Costo Total de la Inversión (USD)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "annual_savings_usd",
+   "fieldtype": "Currency",
+   "label": "Ahorro Neto (1er Año, USD)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "npv",
+   "fieldtype": "Currency",
+   "label": "Valor Presente Neto (USD)"
+  },
+  {
+   "fieldname": "payback_period",
+   "fieldtype": "Float",
+   "label": "Periodo de Repago (años)",
+   "read_only": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "analysis_period",
+   "fieldtype": "Int",
+   "label": "Periodo de Análisis (años)",
+   "default": "25"
+  },
+  {
+   "fieldname": "irr",
+   "fieldtype": "Percent",
+   "label": "Tasa Interna de Retorno (TIR)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "section_consideraciones_financieras",
+   "fieldtype": "Section Break",
+   "label": "Consideraciones Financieras"
+  },
+  {
+   "fieldname": "interest_rate",
+   "fieldtype": "Percent",
+   "label": "Intereses (%)"
+  },
+  {
+   "fieldname": "inflation",
+   "fieldtype": "Percent",
+   "label": "Inflación (%)"
+  },
+  {
+   "fieldname": "energy_cost",
+   "fieldtype": "Float",
+   "label": "Costo de la Energía ($/kWh)",
+   "precision": "4"
+  },
+  {
+   "fieldname": "om_annual_unit",
+   "fieldtype": "Float",
+   "label": "O&M Anual Unitario ($/kWp)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "om_annual_total",
+   "fieldtype": "Currency",
+   "label": "Costo Total de O&M Anual (USD)"
+  },
+  {
+   "fieldname": "commissioning_months",
+   "fieldtype": "Int",
+   "label": "Puesta en Marcha (meses)",
+   "default": "1"
+  },
+  {
+   "fieldname": "section_equipos",
+   "fieldtype": "Section Break",
+   "label": "Equipos Principales del Sistema"
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Table",
+   "label": "Equipos",
+   "options": "Propuesta Equipo"
+  },
+  {
+   "fieldname": "section_documento",
+   "fieldtype": "Section Break",
+   "label": "Contenido del Documento"
+  },
+  {
+   "fieldname": "deliverables",
+   "fieldtype": "Small Text",
+   "label": "Entregables del Proyecto",
+   "default": "Obra Física en funcionamiento.\nEquipos mencionados en esta propuesta.\nPlanos eléctricos del proyecto.\nLegalización del proyecto ante ENEE.\nProtecciones eléctricas.\nMano de obra.\nPlataforma de monitoreo vía PC y Smartphone.\nCompensación de reactivo para evitar multas de bajo factor de potencia."
+  },
+  {
+   "fieldname": "warranties",
+   "fieldtype": "Small Text",
+   "label": "Garantías de Componentes",
+   "default": "Módulo fotovoltaico: 12 años de calidad - 30 años de rendimiento\nInversores: 5 años\nEstructura de paneles fotovoltaicos: 10 años"
+  },
+  {
+   "fieldname": "considerations",
+   "fieldtype": "Small Text",
+   "label": "Consideraciones",
+   "default": "Se contempla voltaje en el punto de conexión igual al del transformador, caso contrario incurriría en otros gastos.\nCuarto de inversores sobre pared existente.\nDisponibilidad de equipo acorde a disponibilidad.\nPunto de conexión menor a XXX"
+  },
+  {
+   "fieldname": "exclusions",
+   "fieldtype": "Small Text",
+   "label": "Exclusiones",
+   "default": "Análisis estructurales y reforzamiento de techos.\nTodo lo no mencionado en esta oferta.\nTrabajos civiles como rupturas de calles y construcciones de cuartos."
+  },
+  {
+   "fieldname": "payment_conditions",
+   "fieldtype": "Small Text",
+   "label": "Condiciones de Pago y Aceptación de Oferta"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-24 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "MIDAS",
+ "name": "Propuesta Solar",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer_name"
+}

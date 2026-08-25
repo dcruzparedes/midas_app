@@ -908,5 +908,270 @@
   "translatable": 0,
   "unique": 0,
   "width": null
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "propuesta_solar_section",
+  "fieldtype": "Section Break",
+  "label": "Información de la Propuesta Solar",
+  "insert_after": "transaction_date",
+  "module": "MIDAS",
+  "name": "Quotation-propuesta_solar_section"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "proposal_date",
+  "fieldtype": "Date",
+  "label": "Fecha de Propuesta",
+  "insert_after": "propuesta_solar_section",
+  "module": "MIDAS",
+  "name": "Quotation-proposal_date"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "project_location",
+  "fieldtype": "Data",
+  "label": "Ubicación del Proyecto",
+  "insert_after": "proposal_date",
+  "module": "MIDAS",
+  "name": "Quotation-project_location"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "project_department",
+  "fieldtype": "Select",
+  "label": "Departamento",
+  "options": "Atlántida\nCholuteca\nColón\nComayagua\nCopán\nCortés\nEl Paraíso\nFrancisco Morazán\nGracias a Dios\nIntibucá\nIslas de la Bahía\nLa Paz\nLempira\nOcotepeque\nOlancho\nSanta Bárbara\nValle\nYoro",
+  "insert_after": "project_location",
+  "module": "MIDAS",
+  "name": "Quotation-project_department"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "tariff_type",
+  "fieldtype": "Select",
+  "label": "Tarifa Eléctrica",
+  "options": "Residencial\nBaja Tensión\nMedia Tensión\nAlta Tensión",
+  "insert_after": "project_department",
+  "module": "MIDAS",
+  "name": "Quotation-tariff_type"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "voltage_type",
+  "fieldtype": "Select",
+  "label": "Voltaje",
+  "options": "Trifásico\nMonofásico",
+  "insert_after": "tariff_type",
+  "module": "MIDAS",
+  "name": "Quotation-voltage_type"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "commissioning_months",
+  "fieldtype": "Int",
+  "label": "Puesta en Marcha (meses)",
+  "default": "1",
+  "insert_after": "voltage_type",
+  "module": "MIDAS",
+  "name": "Quotation-commissioning_months"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "consumo_demanda_section",
+  "fieldtype": "Section Break",
+  "label": "Consumo y Demanda",
+  "insert_after": "commissioning_months",
+  "module": "MIDAS",
+  "name": "Quotation-consumo_demanda_section"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "monthly_consumption",
+  "fieldtype": "Float",
+  "label": "Consumo Mensual (kWh)",
+  "insert_after": "consumo_demanda_section",
+  "module": "MIDAS",
+  "name": "Quotation-monthly_consumption"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "annual_consumption",
+  "fieldtype": "Float",
+  "label": "Consumo Anual (kWh)",
+  "insert_after": "monthly_consumption",
+  "module": "MIDAS",
+  "name": "Quotation-annual_consumption"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "peak_demand",
+  "fieldtype": "Float",
+  "label": "Pico de Demanda (kW)",
+  "insert_after": "annual_consumption",
+  "module": "MIDAS",
+  "name": "Quotation-peak_demand"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "desired_savings",
+  "fieldtype": "Percent",
+  "label": "% Ahorro Deseado",
+  "insert_after": "peak_demand",
+  "module": "MIDAS",
+  "name": "Quotation-desired_savings"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "panel_solar_section",
+  "fieldtype": "Section Break",
+  "label": "Parámetros del Panel Solar",
+  "insert_after": "desired_savings",
+  "module": "MIDAS",
+  "name": "Quotation-panel_solar_section"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "panel_power",
+  "fieldtype": "Float",
+  "label": "Potencia del Panel (W)",
+  "default": "630",
+  "insert_after": "panel_solar_section",
+  "module": "MIDAS",
+  "name": "Quotation-panel_power"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "panel_size",
+  "fieldtype": "Float",
+  "label": "Tamaño del Panel (m²)",
+  "default": "2.623",
+  "insert_after": "panel_power",
+  "module": "MIDAS",
+  "name": "Quotation-panel_size"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "panel_price",
+  "fieldtype": "Float",
+  "label": "Precio Promedio ($/Wp)",
+  "default": "0.75",
+  "insert_after": "panel_size",
+  "module": "MIDAS",
+  "name": "Quotation-panel_price"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "resultados_section",
+  "fieldtype": "Section Break",
+  "label": "Resultados Calculados",
+  "insert_after": "panel_price",
+  "module": "MIDAS",
+  "name": "Quotation-resultados_section"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "dc_power",
+  "fieldtype": "Float",
+  "label": "Potencia DC (kWp)",
+  "read_only": 1,
+  "insert_after": "resultados_section",
+  "module": "MIDAS",
+  "name": "Quotation-dc_power"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "ac_power",
+  "fieldtype": "Float",
+  "label": "Potencia AC (kWac)",
+  "read_only": 1,
+  "insert_after": "dc_power",
+  "module": "MIDAS",
+  "name": "Quotation-ac_power"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "energy_generated",
+  "fieldtype": "Float",
+  "label": "Energía Generada Anual (kWh)",
+  "read_only": 1,
+  "insert_after": "ac_power",
+  "module": "MIDAS",
+  "name": "Quotation-energy_generated"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "coverage_pct",
+  "fieldtype": "Percent",
+  "label": "% de Cobertura",
+  "read_only": 1,
+  "insert_after": "energy_generated",
+  "module": "MIDAS",
+  "name": "Quotation-coverage_pct"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "annual_savings_usd",
+  "fieldtype": "Currency",
+  "label": "Ahorro Neto Anual (USD)",
+  "read_only": 1,
+  "insert_after": "coverage_pct",
+  "module": "MIDAS",
+  "name": "Quotation-annual_savings_usd"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "investment_cost",
+  "fieldtype": "Currency",
+  "label": "Costo Total de la Inversión (USD)",
+  "read_only": 1,
+  "insert_after": "annual_savings_usd",
+  "module": "MIDAS",
+  "name": "Quotation-investment_cost"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "payback_period",
+  "fieldtype": "Float",
+  "label": "Periodo de Recuperación (años)",
+  "read_only": 1,
+  "insert_after": "investment_cost",
+  "module": "MIDAS",
+  "name": "Quotation-payback_period"
+ },
+ {
+  "doctype": "Custom Field",
+  "dt": "Quotation",
+  "fieldname": "required_area",
+  "fieldtype": "Float",
+  "label": "Área Requerida (m²)",
+  "read_only": 1,
+  "insert_after": "payback_period",
+  "module": "MIDAS",
+  "name": "Quotation-required_area"
  }
 ]
