@@ -10,13 +10,26 @@
 	table.data { width: 100%; border-collapse: collapse; margin: 8px 0; }
 	table.data th, table.data td { border: 1px solid #bbb; padding: 5px 8px; text-align: left; }
 	table.data th { background: #eef2f6; font-weight: bold; }
+	.equip-card { width: 100%; border-collapse: collapse; border: 1px solid #ccc; border-radius: 6px; margin: 10px 0; }
+	.equip-card td { border: none; vertical-align: top; }
+	.equip-img-cell { width: 285px; text-align: center; padding: 8px; background: #fafafa; }
+	.equip-img-big { width: 265px; height: 265px; object-fit: contain; }
+	.equip-no-img { color: #aaa; font-size: 11px; }
+	.equip-specs { width: 100%; border-collapse: collapse; }
+	.equip-specs td { padding: 1px 4px; font-size: 10px; line-height: 1.15; }
+	.equip-specs .k { font-weight: bold; color: #1a5276; width: 65px; background: #f5f7fa; }
+	.chart { margin: 14px 0 6px; }
+	.chart-title { font-weight: bold; color: #1a5276; margin-bottom: 2px; }
+	.chart svg { width: 100%; height: auto; }
 	ul { margin: 6px 0 6px 20px; }
 	.signature { width: 100%; margin-top: 70px; }
 	.signature td { border: none; width: 50%; text-align: center; padding-top: 8px; }
 	.signature .line { border-top: 1px solid #000; margin: 0 50px; }
 	.signature .name { font-weight: bold; margin-top: 4px; }
-	.logo { position: fixed; top: 20px; right: 20px; width: 100px; }
+	.logo { float: right; width: 100px; margin: 0 0 8px 8px; }
 </style>
+
+{% set charts = doc.get_charts() %}
 
 <img class="logo" src="/assets/midas_app/images/logo_midas.jpg" />
 
@@ -62,47 +75,28 @@ sistema solar fotovoltaico mencionado en las instalaciones de <strong>{{ doc.cus
 
 <div class="section-title">Equipos Principales del Sistema</div>
 
-{% set modulos = doc.equipment | selectattr('equipment_type', 'equalto', 'Módulo Fotovoltaico') | list %}
-{% set inversores = doc.equipment | selectattr('equipment_type', 'equalto', 'Inversor') | list %}
-
-{% if modulos %}
-<p><strong>Módulos Fotovoltaicos</strong></p>
-<table class="data">
-	<thead>
-		<tr><th>Modelo</th><th>Cantidad</th><th>Potencia</th><th>Potencia Total</th></tr>
-	</thead>
-	<tbody>
-		{% for e in modulos %}
-		<tr>
-			<td>{{ e.model or "" }}</td>
-			<td>{{ "{:,.0f}".format(e.quantity or 0) }}</td>
-			<td>{{ "{:,.2f}".format(e.unit_power or 0) }} {{ e.unit or "" }}</td>
-			<td>{{ "{:,.2f}".format(e.total_power or 0) }} {{ e.unit or "" }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
+{% for e in doc.equipment %}
+<table class="equip-card">
+	<tr>
+		<td class="equip-img-cell">
+			{% if e.image %}<img class="equip-img-big" src="{{ frappe.utils.get_url(e.image) }}" />{% else %}<span class="equip-no-img">Sin imagen</span>{% endif %}
+		</td>
+		<td>
+			<table class="equip-specs">
+				<tr><td class="k">Tipo de Equipo</td><td>{{ e.equipment_type or "" }}</td></tr>
+				<tr><td class="k">Marca</td><td>{{ e.marca or "" }}</td></tr>
+				<tr><td class="k">Modelo</td><td>{{ e.model or "" }}</td></tr>
+				<tr><td class="k">Cantidad</td><td>{{ "{:,.0f}".format(e.quantity or 0) }}</td></tr>
+				<tr><td class="k">Potencia Unitaria</td><td>{{ "{:,.2f}".format(e.unit_power or 0) }} {{ e.unit or "" }}</td></tr>
+				<tr><td class="k">Potencia Total</td><td>{{ "{:,.2f}".format(e.total_power or 0) }} {{ e.unit or "" }}</td></tr>
+				<tr><td class="k">Voltaje</td><td>{{ e.voltage or "" }}</td></tr>
+			</table>
+		</td>
+	</tr>
 </table>
-{% endif %}
-
-{% if inversores %}
-<p><strong>Inversores</strong></p>
-<table class="data">
-	<thead>
-		<tr><th>Modelo</th><th>Cantidad</th><th>Potencia</th><th>Potencia Total</th><th>Voltaje</th></tr>
-	</thead>
-	<tbody>
-		{% for e in inversores %}
-		<tr>
-			<td>{{ e.model or "" }}</td>
-			<td>{{ "{:,.0f}".format(e.quantity or 0) }}</td>
-			<td>{{ "{:,.2f}".format(e.unit_power or 0) }} {{ e.unit or "" }}</td>
-			<td>{{ "{:,.2f}".format(e.total_power or 0) }} {{ e.unit or "" }}</td>
-			<td>{{ e.voltage or "" }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
-{% endif %}
+{% else %}
+<p>Sin equipos registrados.</p>
+{% endfor %}
 
 <div class="section-title">Resultados Técnicos del Análisis</div>
 <p><strong>Comportamiento Energético del Sistema</strong></p>
@@ -125,6 +119,11 @@ sistema solar fotovoltaico mencionado en las instalaciones de <strong>{{ doc.cus
 	<tr><td>Tarifa</td><td>{{ doc.tariff_type or "" }}</td></tr>
 </table>
 
+<div class="section-title">Gráficas Técnicas</div>
+{{ charts.consumo_generacion }}
+{{ charts.matriz_energetica }}
+{{ charts.perfil_horario }}
+
 <div class="section-title">Resultados Financieros del Análisis</div>
 <p><strong>Resumen Económico</strong></p>
 <table class="data">
@@ -146,6 +145,11 @@ sistema solar fotovoltaico mencionado en las instalaciones de <strong>{{ doc.cus
 	<tr><td>Costo total de O&amp;M anual</td><td>{{ doc.get_formatted("om_annual_total") }}</td></tr>
 	<tr><td>Periodo de análisis</td><td>30 años</td></tr>
 </table>
+
+<div class="section-title">Gráficas Financieras</div>
+{{ charts.flujo_caja }}
+{{ charts.consumo_antes_despues }}
+{{ charts.flujo_acumulado }}
 
 <div class="section-title">Entregables del Proyecto</div>
 <ul>

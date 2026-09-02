@@ -51,9 +51,13 @@
   "om_annual_unit",
   "om_annual_total",
   "commissioning_months",
-  "section_equipos",
-  "equipment",
-  "section_documento",
+   "section_equipos",
+   "equipment",
+   "section_analisis",
+   "consumo_mensual",
+   "perfil_horario",
+   "flujo_caja",
+   "section_documento",
   "deliverables",
   "warranties",
   "considerations",
@@ -68,24 +72,24 @@
    "options": "PROP-.#####",
    "reqd": 1
   },
+   {
+    "fieldname": "quotation",
+    "fieldtype": "Link",
+    "label": "Cotización",
+     "options": "Cotizacion Midas"
+   },
   {
-   "fieldname": "quotation",
-   "fieldtype": "Link",
-   "label": "Cotización",
-   "options": "Quotation"
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Cliente",
-   "options": "Customer",
-   "reqd": 1
-  },
+"fieldname": "customer",
+    "fieldtype": "Link",
+    "label": "Cliente",
+    "options": "Cliente",
+    "reqd": 1
+   },
   {
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "label": "Nombre del Cliente",
-   "fetch_from": "customer.customer_name",
+   "fetch_from": "customer.nombre",
    "read_only": 1
   },
   {
@@ -295,12 +299,13 @@
    "fieldtype": "Percent",
    "label": "Inflación (%)"
   },
-  {
-   "fieldname": "energy_cost",
-   "fieldtype": "Float",
-   "label": "Costo de la Energía ($/kWh)",
-   "precision": "4"
-  },
+   {
+    "fieldname": "energy_cost",
+    "fieldtype": "Float",
+    "label": "Costo de la Energía ($/kWh)",
+    "default": "0.1457",
+    "precision": "4"
+   },
   {
    "fieldname": "om_annual_unit",
    "fieldtype": "Float",
@@ -323,17 +328,40 @@
    "fieldtype": "Section Break",
    "label": "Equipos Principales del Sistema"
   },
-  {
-   "fieldname": "equipment",
-   "fieldtype": "Table",
-   "label": "Equipos",
-   "options": "Propuesta Equipo"
-  },
-  {
-   "fieldname": "section_documento",
-   "fieldtype": "Section Break",
-   "label": "Contenido del Documento"
-  },
+   {
+    "fieldname": "equipment",
+    "fieldtype": "Table",
+    "label": "Equipos",
+    "options": "Propuesta Equipo"
+   },
+   {
+    "fieldname": "section_analisis",
+    "fieldtype": "Section Break",
+    "label": "Series y Gráficas del Análisis"
+   },
+   {
+    "fieldname": "consumo_mensual",
+    "fieldtype": "Table",
+    "label": "Consumo vs Generación (mensual)",
+    "options": "Propuesta Consumo Mensual"
+   },
+   {
+    "fieldname": "perfil_horario",
+    "fieldtype": "Table",
+    "label": "Consumo Promedio por Hora",
+    "options": "Propuesta Perfil Horario"
+   },
+   {
+    "fieldname": "flujo_caja",
+    "fieldtype": "Table",
+    "label": "Flujo de Caja (0-25 años)",
+    "options": "Propuesta Flujo Caja"
+   },
+   {
+    "fieldname": "section_documento",
+    "fieldtype": "Section Break",
+    "label": "Contenido del Documento"
+   },
   {
    "fieldname": "deliverables",
    "fieldtype": "Small Text",

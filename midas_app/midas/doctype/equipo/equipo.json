@@ -1,0 +1,151 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:nombre",
+ "creation": "2026-09-02 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "nombre",
+  "tipo_equipo",
+  "imagen",
+  "column_break_detalle",
+  "marca",
+  "modelo",
+  "section_especificaciones",
+  "potencia",
+  "unidad",
+  "voltage",
+  "precio",
+  "section_descripcion",
+  "descripcion",
+  "garantia"
+ ],
+ "fields": [
+  {
+   "fieldname": "nombre",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nombre del Equipo",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "tipo_equipo",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tipo de Equipo",
+   "options": "Módulo Fotovoltaico\nInversor\nOtros",
+   "reqd": 1
+  },
+  {
+   "fieldname": "imagen",
+   "fieldtype": "Attach Image",
+   "in_list_view": 1,
+   "label": "Imagen"
+  },
+  {
+   "fieldname": "column_break_detalle",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "marca",
+   "fieldtype": "Data",
+   "label": "Marca"
+  },
+  {
+   "fieldname": "modelo",
+   "fieldtype": "Data",
+   "label": "Modelo"
+  },
+  {
+   "fieldname": "section_especificaciones",
+   "fieldtype": "Section Break",
+   "label": "Especificaciones"
+  },
+  {
+   "fieldname": "potencia",
+   "fieldtype": "Float",
+   "label": "Potencia"
+  },
+  {
+   "fieldname": "unidad",
+   "fieldtype": "Select",
+   "label": "Unidad",
+   "options": "W\nWp\nkW\nkWac"
+  },
+  {
+   "fieldname": "voltage",
+   "fieldtype": "Data",
+   "label": "Voltaje"
+  },
+  {
+   "fieldname": "precio",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Precio (USD)"
+  },
+  {
+   "fieldname": "section_descripcion",
+   "fieldtype": "Section Break",
+   "label": "Descripción"
+  },
+  {
+   "fieldname": "descripcion",
+   "fieldtype": "Small Text",
+   "label": "Descripción"
+  },
+  {
+   "fieldname": "garantia",
+   "fieldtype": "Data",
+   "label": "Garantía"
+  }
+ ],
+ "links": [],
+ "modified": "2026-09-02 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "MIDAS",
+ "name": "Equipo",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "nombre"
+}

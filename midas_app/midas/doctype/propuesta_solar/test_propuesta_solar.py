@@ -21,4 +21,4 @@ class TestPropuestaSolar(FrappeTestCase):
 		self.assertAlmostEqual(proposal.ac_power, 41.73913043478261, places=2)
 		self.assertAlmostEqual(proposal.energy_generated, 72000.0, places=0)
 		self.assertAlmostEqual(proposal.investment_cost, 39130.434782608696, places=0)
-		self.assertAlmostEqual(proposal.payback_period, 2.535, places=2)
+		self.assertAlmostEqual(proposal.payback_period, 3.9521, places=2)

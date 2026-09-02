@@ -1,0 +1,99 @@
+{
+ "doctype": "Workspace",
+ "name": "MIDAS",
+ "label": "MIDAS",
+ "title": "MIDAS",
+ "module": "MIDAS",
+ "app": "midas_app",
+ "icon": "sun",
+ "indicator_color": "blue",
+ "type": "Workspace",
+ "public": 1,
+ "content": "[{\"type\": \"header\", \"data\": {\"text\": \"Corporación Midas — Generador de Propuestas Solares\", \"col\": 12}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Clientes\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Equipos\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Servicios\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Cotización Midas\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Propuesta Midas\", \"col\": 3}}, {\"type\": \"card\", \"data\": {\"card_name\": \"Maestros\", \"col\": 4}}, {\"type\": \"card\", \"data\": {\"card_name\": \"Propuestas\", \"col\": 4}}]",
+ "shortcuts": [
+  {
+   "type": "DocType",
+   "link_to": "Cliente",
+   "label": "Clientes",
+   "color": "#1a5276",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Equipo",
+   "label": "Equipos",
+   "color": "#16a085",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Servicio",
+   "label": "Servicios",
+   "color": "#8e44ad",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Cotizacion Midas",
+   "label": "Cotización Midas",
+   "color": "#e67e22",
+   "doc_view": "List"
+  },
+  {
+   "type": "DocType",
+   "link_to": "Propuesta Solar",
+   "label": "Propuesta Midas",
+   "color": "#27ae60",
+   "doc_view": "List"
+  }
+ ],
+ "links": [
+  {
+   "type": "Card Break",
+   "label": "Maestros",
+   "icon": "users",
+   "hidden": 0
+  },
+  {
+   "type": "Link",
+   "link_type": "DocType",
+   "link_to": "Cliente",
+   "label": "Clientes",
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "link_type": "DocType",
+   "link_to": "Equipo",
+   "label": "Equipos",
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "link_type": "DocType",
+   "link_to": "Servicio",
+   "label": "Servicios",
+   "onboard": 0
+  },
+  {
+   "type": "Card Break",
+   "label": "Propuestas",
+   "icon": "file-text",
+   "hidden": 0
+  },
+  {
+   "type": "Link",
+   "link_type": "DocType",
+   "link_to": "Cotizacion Midas",
+   "label": "Cotización Midas",
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "link_type": "DocType",
+   "link_to": "Propuesta Solar",
+   "label": "Propuesta Midas",
+   "onboard": 0
+  }
+ ]
+}

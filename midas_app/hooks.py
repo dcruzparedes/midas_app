@@ -1,11 +1,13 @@
 app_name = "midas_app"
-app_title = "MIDAS"
+app_title = "MIDAS-GDP"
 app_publisher = "MIDAS"
 app_description = "Generador de Propuestas"
 app_email = "corpmidas33@gmail.com"
 app_license = "mit"
 
-fixtures = ["Custom Field", "Property Setter", "Print Format", "Client Script", "Server Script"]
+fixtures = [
+	"Print Format",
+]
 
 # Apps
 # ------------------
@@ -13,15 +15,15 @@ fixtures = ["Custom Field", "Property Setter", "Print Format", "Client Script", 
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "midas_app",
-# 		"logo": "/assets/midas_app/logo.png",
-# 		"title": "MIDAS",
-# 		"route": "/midas_app",
-# 		"has_permission": "midas_app.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "midas_app",
+		"logo": "/assets/midas_app/images/logo_midas.jpg",
+		"title": "MIDAS-GDP",
+		"route": "/desk/midas",
+		"has_permission": "midas_app.api.has_app_permission"
+	}
+]
 
 # Includes in <head>
 # ------------------

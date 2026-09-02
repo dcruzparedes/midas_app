@@ -1,0 +1,44 @@
+{
+ "actions": [],
+ "creation": "2026-09-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "mes",
+  "consumo_kwh",
+  "generacion_kwh"
+ ],
+ "fields": [
+  {
+   "fieldname": "mes",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mes",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consumo_kwh",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Consumo (kWh)"
+  },
+  {
+   "fieldname": "generacion_kwh",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Generación (kWh)"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "MIDAS",
+ "name": "Propuesta Consumo Mensual",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "ASC",
+ "states": []
+}

@@ -1,0 +1,121 @@
+{
+ "actions": [],
+ "creation": "2026-09-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+   "field_order": [
+   "item_code",
+   "item_name",
+   "description",
+   "quantity_and_rate",
+  "qty",
+  "uom",
+  "column_break_rate",
+  "rate",
+  "discount_percentage",
+  "discount_amount",
+  "net_rate",
+  "amount",
+  "net_amount"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "columns": 2,
+"fieldname": "item_code",
+    "fieldtype": "Link",
+    "in_list_view": 1,
+    "label": "Servicio",
+    "options": "Servicio",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+"fieldname": "item_name",
+    "fieldtype": "Data",
+    "fetch_from": "item_code.nombre",
+    "in_list_view": 1,
+    "label": "Nombre del Servicio",
+    "read_only": 1
+   },
+   {
+    "fieldname": "description",
+    "fieldtype": "Small Text",
+    "fetch_from": "item_code.descripcion",
+    "label": "Descripción"
+   },
+   {
+    "fieldname": "quantity_and_rate",
+   "fieldtype": "Section Break",
+   "label": "Cantidad y Precio"
+  },
+  {
+   "columns": 1,
+   "default": "1",
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Cantidad",
+   "reqd": 1
+  },
+  {
+"fieldname": "uom",
+    "fieldtype": "Select",
+    "in_list_view": 1,
+    "label": "Unidad",
+    "options": "Unidad\nServicio\nCaja\nHora\nLote\nm\nm²\nkWp\nkW"
+   },
+  {
+   "fieldname": "column_break_rate",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 2,
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Precio Unitario"
+  },
+  {
+   "fieldname": "discount_percentage",
+   "fieldtype": "Percent",
+   "label": "Descuento (%)"
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Descuento (monto)"
+  },
+  {
+   "fieldname": "net_rate",
+   "fieldtype": "Currency",
+   "label": "Precio Neto",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Importe",
+   "read_only": 1
+  },
+  {
+   "fieldname": "net_amount",
+   "fieldtype": "Currency",
+   "label": "Importe Neto",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "MIDAS",
+  "name": "Cotizacion Midas Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "ASC",
+ "states": []
+}

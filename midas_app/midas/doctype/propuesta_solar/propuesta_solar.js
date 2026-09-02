@@ -3,6 +3,20 @@
 
 frappe.ui.form.on("Propuesta Solar", {
 	refresh(frm) {
+		if (!frm.is_new()) {
+			frm.add_custom_button(__("Descargar Word"), () => {
+				window.open(frappe.urllib.get_full_url(
+					"/api/method/midas_app.midas.doctype.propuesta_solar.propuesta_solar.download_proposal_word?name="
+					+ encodeURIComponent(frm.doc.name)
+				), "_blank");
+			});
+			frm.add_custom_button(__("Descargar PDF"), () => {
+				window.open(frappe.urllib.get_full_url(
+					"/api/method/midas_app.midas.doctype.propuesta_solar.propuesta_solar.download_proposal_pdf?name="
+					+ encodeURIComponent(frm.doc.name)
+				), "_blank");
+			});
+		}
 		if (!frm.is_new() && frm.doc.quotation) {
 			frm.add_custom_button(__("Traer datos de cotización"), () => {
 				load_quotation_data(frm);

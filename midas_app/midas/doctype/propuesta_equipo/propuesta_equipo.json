@@ -5,30 +5,57 @@
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
- "field_order": [
-  "equipment_type",
-  "model",
-  "quantity",
-  "unit_power",
-  "unit",
-  "total_power",
-  "voltage"
- ],
- "fields": [
-  {
-   "fieldname": "equipment_type",
-   "fieldtype": "Select",
-   "label": "Tipo de Equipo",
-   "options": "Módulo Fotovoltaico\nInversor",
-   "in_list_view": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "model",
-   "fieldtype": "Data",
-   "label": "Modelo",
-   "in_list_view": 1
-  },
+   "field_order": [
+    "item",
+    "image",
+    "equipment_type",
+"model",
+    "marca",
+    "quantity",
+   "unit_power",
+   "unit",
+   "total_power",
+   "voltage"
+  ],
+  "fields": [
+   {
+"fieldname": "item",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "Equipo",
+     "options": "Equipo"
+    },
+   {
+    "fieldname": "image",
+    "fieldtype": "Attach Image",
+    "fetch_from": "item.imagen",
+    "fetch_if_empty": 1,
+    "in_list_view": 1,
+    "label": "Imagen"
+   },
+   {
+"fieldname": "equipment_type",
+     "fieldtype": "Select",
+     "fetch_from": "item.tipo_equipo",
+     "label": "Tipo de Equipo",
+     "options": "Módulo Fotovoltaico\nInversor\nOtros",
+     "in_list_view": 1,
+     "reqd": 1
+    },
+{
+    "fieldname": "model",
+    "fieldtype": "Data",
+    "fetch_from": "item.modelo",
+    "label": "Modelo",
+    "in_list_view": 1
+   },
+   {
+    "fieldname": "marca",
+    "fieldtype": "Data",
+    "fetch_from": "item.marca",
+    "label": "Marca",
+    "in_list_view": 1
+   },
   {
    "fieldname": "quantity",
    "fieldtype": "Float",
@@ -36,18 +63,20 @@
    "in_list_view": 1
   },
   {
-   "fieldname": "unit_power",
-   "fieldtype": "Float",
-   "label": "Potencia Unitaria",
-   "in_list_view": 1
-  },
+"fieldname": "unit_power",
+    "fieldtype": "Float",
+    "fetch_from": "item.potencia",
+    "label": "Potencia Unitaria",
+    "in_list_view": 1
+   },
   {
-   "fieldname": "unit",
-   "fieldtype": "Select",
-   "label": "Unidad",
-   "options": "W\nkW\nWp\nkWac",
-   "in_list_view": 1
-  },
+"fieldname": "unit",
+    "fieldtype": "Select",
+    "fetch_from": "item.unidad",
+    "label": "Unidad",
+    "options": "W\nkW\nWp\nkWac",
+    "in_list_view": 1
+   },
   {
    "fieldname": "total_power",
    "fieldtype": "Float",
@@ -56,10 +85,11 @@
    "in_list_view": 1
   },
   {
-   "fieldname": "voltage",
-   "fieldtype": "Data",
-   "label": "Voltaje"
-  }
+"fieldname": "voltage",
+    "fieldtype": "Data",
+    "fetch_from": "item.voltage",
+    "label": "Voltaje"
+   }
  ],
  "istable": 1,
  "links": [],

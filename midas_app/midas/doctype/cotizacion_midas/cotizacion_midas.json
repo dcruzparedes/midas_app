@@ -1,0 +1,429 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-09-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "customer",
+  "customer_name",
+  "transaction_date",
+  "valid_till",
+  "column_break_datos",
+"company",
+   "currency",
+   "status",
+  "section_solar",
+  "proposal_date",
+  "project_location",
+  "project_department",
+  "tariff_type",
+  "voltage_type",
+  "commissioning_months",
+  "section_consumo",
+  "monthly_consumption",
+  "annual_consumption",
+  "peak_demand",
+  "desired_savings",
+  "exchange_rate",
+  "section_panel",
+  "panel_power",
+  "panel_size",
+  "panel_price",
+  "section_resultados",
+  "dc_power",
+  "ac_power",
+  "energy_generated",
+  "coverage_pct",
+  "annual_savings_usd",
+  "investment_cost",
+  "payback_period",
+  "required_area",
+  "panel_quantity",
+  "section_items",
+  "items",
+  "section_totals",
+  "total_qty",
+  "base_total",
+  "total",
+  "column_break_totals",
+  "net_total",
+  "additional_discount_percentage",
+  "discount_amount",
+"section_taxes",
+   "taxes",
+   "total_taxes_and_charges",
+  "grand_total",
+  "rounded_total",
+  "section_link",
+  "propuesta"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Serie",
+   "options": "COT-MIDAS-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cliente",
+   "options": "Cliente",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "fetch_from": "customer.nombre",
+   "label": "Nombre del Cliente",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Fecha de Cotización",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valid_till",
+   "fieldtype": "Date",
+   "label": "Válida Hasta"
+  },
+  {
+   "fieldname": "column_break_datos",
+   "fieldtype": "Column Break"
+  },
+  {
+"fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Compañía",
+    "options": "Compania",
+    "reqd": 1
+   },
+   {
+    "fieldname": "currency",
+    "fieldtype": "Link",
+    "fetch_from": "company.moneda",
+    "label": "Moneda",
+    "options": "Currency"
+   },
+   {
+    "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Estado",
+   "options": "Draft\nOpen\nReplied\nOrdered\nLost\nCancelled"
+  },
+  {
+   "fieldname": "section_solar",
+   "fieldtype": "Section Break",
+   "label": "Información de la Propuesta Solar"
+  },
+  {
+   "fieldname": "proposal_date",
+   "fieldtype": "Date",
+   "label": "Fecha de Propuesta"
+  },
+  {
+   "fieldname": "project_location",
+   "fieldtype": "Data",
+   "label": "Ubicación del Proyecto"
+  },
+  {
+   "fieldname": "project_department",
+   "fieldtype": "Select",
+   "label": "Departamento",
+   "options": "Atlántida\nCholuteca\nColón\nComayagua\nCopán\nCortés\nEl Paraíso\nFrancisco Morazán\nGracias a Dios\nIntibucá\nIslas de la Bahía\nLa Paz\nLempira\nOcotepeque\nOlancho\nSanta Bárbara\nValle\nYoro"
+  },
+  {
+   "fieldname": "tariff_type",
+   "fieldtype": "Select",
+   "label": "Tarifa Eléctrica",
+   "options": "Residencial\nBaja Tensión\nMedia Tensión\nAlta Tensión"
+  },
+  {
+   "fieldname": "voltage_type",
+   "fieldtype": "Select",
+   "label": "Voltaje",
+   "options": "Trifásico\nMonofásico"
+  },
+  {
+   "default": "1",
+   "fieldname": "commissioning_months",
+   "fieldtype": "Int",
+   "label": "Puesta en Marcha (meses)"
+  },
+  {
+   "fieldname": "section_consumo",
+   "fieldtype": "Section Break",
+   "label": "Consumo y Demanda"
+  },
+  {
+   "fieldname": "monthly_consumption",
+   "fieldtype": "Float",
+   "label": "Consumo Mensual (kWh)"
+  },
+  {
+   "fieldname": "annual_consumption",
+   "fieldtype": "Float",
+   "label": "Consumo Anual (kWh)"
+  },
+  {
+   "fieldname": "peak_demand",
+   "fieldtype": "Float",
+   "label": "Pico de Demanda (kW)"
+  },
+  {
+   "fieldname": "desired_savings",
+   "fieldtype": "Percent",
+   "label": "% Ahorro Deseado"
+  },
+  {
+   "default": "26.8255",
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Tipo de Cambio (Lps/USD)",
+   "precision": "4"
+  },
+  {
+   "fieldname": "section_panel",
+   "fieldtype": "Section Break",
+   "label": "Parámetros del Panel Solar"
+  },
+  {
+   "default": "630",
+   "fieldname": "panel_power",
+   "fieldtype": "Float",
+   "label": "Potencia del Panel (W)"
+  },
+  {
+   "default": "2.622942",
+   "fieldname": "panel_size",
+   "fieldtype": "Float",
+   "label": "Tamaño del Panel (m²)"
+  },
+  {
+   "default": "0.75",
+   "fieldname": "panel_price",
+   "fieldtype": "Float",
+   "label": "Precio Promedio ($/Wp)"
+  },
+  {
+   "fieldname": "section_resultados",
+   "fieldtype": "Section Break",
+   "label": "Resultados Calculados"
+  },
+  {
+   "fieldname": "dc_power",
+   "fieldtype": "Float",
+   "label": "Potencia DC (kWp)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ac_power",
+   "fieldtype": "Float",
+   "label": "Potencia AC (kWac)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "energy_generated",
+   "fieldtype": "Float",
+   "label": "Energía Generada Anual (kWh)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "coverage_pct",
+   "fieldtype": "Percent",
+   "label": "% de Cobertura",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "annual_savings_usd",
+   "fieldtype": "Currency",
+   "label": "Ahorro Neto Anual (USD)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "investment_cost",
+   "fieldtype": "Currency",
+   "label": "Costo Total de la Inversión (USD)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payback_period",
+   "fieldtype": "Float",
+   "label": "Periodo de Recuperación (años)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "required_area",
+   "fieldtype": "Float",
+   "label": "Área Requerida (m²)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "panel_quantity",
+   "fieldtype": "Int",
+   "label": "Cantidad de Paneles",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_items",
+   "fieldtype": "Section Break",
+   "label": "Ítems"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Ítems",
+    "options": "Cotizacion Midas Item"
+  },
+  {
+   "fieldname": "section_totals",
+   "fieldtype": "Section Break",
+   "label": "Totales"
+  },
+  {
+   "fieldname": "total_qty",
+   "fieldtype": "Float",
+   "label": "Cantidad Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_total",
+   "fieldtype": "Currency",
+   "label": "Total Base",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_totals",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "net_total",
+   "fieldtype": "Currency",
+   "label": "Total Neto",
+   "read_only": 1
+  },
+  {
+   "fieldname": "additional_discount_percentage",
+   "fieldtype": "Percent",
+   "label": "Descuento Adicional (%)"
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Monto de Descuento Adicional",
+   "read_only": 1
+  },
+  {
+"fieldname": "section_taxes",
+    "fieldtype": "Section Break",
+    "label": "Impuestos"
+   },
+   {
+    "fieldname": "taxes",
+    "fieldtype": "Table",
+   "label": "Impuestos",
+    "options": "Cotizacion Midas Tax"
+  },
+  {
+   "fieldname": "total_taxes_and_charges",
+   "fieldtype": "Currency",
+   "label": "Total de Impuestos",
+   "read_only": 1
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Total General",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rounded_total",
+   "fieldtype": "Currency",
+   "label": "Total Redondeado",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_link",
+   "fieldtype": "Section Break",
+   "label": "Propuesta Generada"
+  },
+  {
+   "fieldname": "propuesta",
+   "fieldtype": "Link",
+   "label": "Propuesta Midas",
+   "options": "Propuesta Solar",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "MIDAS",
+  "name": "Cotizacion Midas",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer_name"
+}
