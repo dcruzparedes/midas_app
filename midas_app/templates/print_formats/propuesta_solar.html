@@ -26,7 +26,16 @@
 	.signature td { border: none; width: 50%; text-align: center; padding-top: 8px; }
 	.signature .line { border-top: 1px solid #000; margin: 0 50px; }
 	.signature .name { font-weight: bold; margin-top: 4px; }
-	.logo { float: right; width: 100px; margin: 0 0 8px 8px; }
+	.logo { position: absolute; top: 20px; right: 20px; width: 100px; z-index: 1; }
+	.payment-box { margin: 20px 0 8px; border: 2px solid #1a5276; border-radius: 8px; overflow: hidden; page-break-inside: avoid; }
+	.payment-title { background: #1a5276; color: #ffffff; font-size: 16px; font-weight: bold; text-align: center; padding: 10px; letter-spacing: 1px; text-transform: uppercase; }
+	.payment-total { text-align: center; font-size: 14px; padding: 12px 0 4px; }
+	.payment-total strong { color: #1a5276; font-size: 20px; }
+	.payment-table { width: 100%; border-collapse: collapse; }
+	.payment-table td { width: 50%; text-align: center; padding: 12px 8px; border-top: 1px solid #c9d6e2; }
+	.payment-table td:first-child { border-right: 1px solid #c9d6e2; }
+	.payment-label { display: block; font-size: 12px; font-weight: bold; color: #1a5276; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+	.payment-amount { display: block; font-size: 22px; font-weight: bold; color: #c0392b; }
 </style>
 
 {% set charts = doc.get_charts() %}
@@ -180,6 +189,27 @@ sistema solar fotovoltaico mencionado en las instalaciones de <strong>{{ doc.cus
 </ul>
 
 <div class="section-title">Condiciones de Pago y Aceptación de Oferta</div>
+{% if doc.total_project_price %}
+<div class="payment-box">
+	<div class="payment-title">Condiciones de Pago</div>
+	<div class="payment-total">Precio Total del Proyecto: <strong>{{ doc.get_formatted("total_project_price") }}</strong></div>
+	<table class="payment-table">
+		<tr>
+			<td>
+				<span class="payment-label">50% al Aceptar la Oferta</span>
+				<span class="payment-amount">{{ doc.get_formatted("payment_acceptance_amount") }}</span>
+			</td>
+			<td>
+				<span class="payment-label">50% Recepción del Proyecto</span>
+				<span class="payment-amount">{{ doc.get_formatted("payment_reception_amount") }}</span>
+			</td>
+		</tr>
+	</table>
+</div>
+{% else %}
+<p>Precio total del proyecto no definido.</p>
+{% endif %}
+
 {% if doc.payment_conditions %}
 <ul>
 {% for line in doc.payment_conditions.splitlines() if line.strip() %}
