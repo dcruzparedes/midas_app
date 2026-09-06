@@ -4,18 +4,20 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_NAMESPACE }}/midas_app
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/midas_app
 
 jobs:
   build-and-push:
-    runs-on: self-hosted
+    runs-on: [self-hosted, ARM64]
     steps:
       - name: Checkout frappe_docker
         uses: actions/checkout@v4
         with:
           repository: frappe/frappe_docker
+          ref: v3.2.2
 
       - name: Generate apps.json
         run: |
@@ -76,7 +78,7 @@ jobs:
 
   deploy:
     needs: build-and-push
-    runs-on: self-hosted
+    runs-on: [self-hosted, ARM64]
     steps:
       - name: Trigger Portainer Webhook
         run: |
