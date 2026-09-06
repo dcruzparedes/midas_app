@@ -34,6 +34,7 @@ services:
 
   crear-sitio:
     image: ${IMAGE_NAME}:latest
+    pull_policy: always
     restart: "no"
     entrypoint: ["bash", "-c"]
     command:
@@ -75,6 +76,7 @@ services:
 
   backend:
     image: ${IMAGE_NAME}:latest
+    pull_policy: always
     restart: unless-stopped
     command: bench serve --port 8000
     environment:
@@ -89,6 +91,7 @@ services:
 
   worker:
     image: ${IMAGE_NAME}:latest
+    pull_policy: always
     restart: unless-stopped
     command: bench worker --queue long,short,default
     environment:
@@ -103,6 +106,7 @@ services:
 
   scheduler:
     image: ${IMAGE_NAME}:latest
+    pull_policy: always
     restart: unless-stopped
     command: bench schedule
     environment:
@@ -117,6 +121,7 @@ services:
 
   socketio:
     image: ${IMAGE_NAME}:latest
+    pull_policy: always
     restart: unless-stopped
     command: node /home/frappe/frappe-bench/apps/frappe/socketio.js
     environment:
@@ -131,6 +136,7 @@ services:
 
   frontend:
     image: ${IMAGE_NAME}:latest
+    pull_policy: always
     restart: unless-stopped
     command: nginx-entrypoint.sh
     environment:
