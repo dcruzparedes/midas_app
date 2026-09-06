@@ -32,10 +32,13 @@
 	.payment-total { text-align: center; font-size: 14px; padding: 12px 0 4px; }
 	.payment-total strong { color: #1a5276; font-size: 20px; }
 	.payment-table { width: 100%; border-collapse: collapse; }
-	.payment-table td { width: 50%; text-align: center; padding: 12px 8px; border-top: 1px solid #c9d6e2; }
-	.payment-table td:first-child { border-right: 1px solid #c9d6e2; }
-	.payment-label { display: block; font-size: 12px; font-weight: bold; color: #1a5276; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-	.payment-amount { display: block; font-size: 22px; font-weight: bold; color: #c0392b; }
+	.payment-table td { padding: 10px 12px; border-top: 1px solid #c9d6e2; vertical-align: middle; }
+	.payment-label-cell { width: 62%; }
+	.payment-amount-cell { width: 38%; text-align: right; border-left: 1px solid #c9d6e2; }
+	.payment-label { font-size: 12px; font-weight: bold; color: #1a5276; text-transform: uppercase; letter-spacing: 1px; }
+	.payment-when { display: block; font-size: 11px; color: #666; margin-top: 2px; }
+	.payment-amount { font-size: 20px; font-weight: bold; color: #c0392b; }
+	.payment-empty { text-align: center; color: #888; }
 </style>
 
 {% set charts = doc.get_charts() %}
@@ -125,7 +128,7 @@ sistema solar fotovoltaico mencionado en las instalaciones de <strong>{{ doc.cus
 	<tr><td>Consumo Anual</td><td>{{ "{:,.2f}".format(doc.annual_consumption or 0) }} kWh</td></tr>
 	<tr><td>Consumo promedio mensual</td><td>{{ "{:,.2f}".format(doc.monthly_consumption or 0) }} kWh</td></tr>
 	<tr><td>Pico de demanda</td><td>{{ "{:,.2f}".format(doc.peak_demand or 0) }} kW</td></tr>
-	<tr><td>Tarifa</td><td>{{ doc.tariff_type or "" }}</td></tr>
+	<tr><td>Tarifa</td><td>{{ doc.tariff_type or "" }}{% if doc.tariff_rate %} — {{ "{:,.4f}".format(doc.tariff_rate) }} $/kWh{% endif %}</td></tr>
 </table>
 
 <div class="section-title">Gráficas Técnicas</div>
@@ -194,16 +197,19 @@ sistema solar fotovoltaico mencionado en las instalaciones de <strong>{{ doc.cus
 	<div class="payment-title">Condiciones de Pago</div>
 	<div class="payment-total">Precio Total del Proyecto: <strong>{{ doc.get_formatted("total_project_price") }}</strong></div>
 	<table class="payment-table">
+	{% for p in doc.payment_schedule %}
 		<tr>
-			<td>
-				<span class="payment-label">50% al Aceptar la Oferta</span>
-				<span class="payment-amount">{{ doc.get_formatted("payment_acceptance_amount") }}</span>
+			<td class="payment-label-cell">
+				<span class="payment-label">{{ p.label or "Pago" }}{% if p.percentage is not none %} · {{ "{:g}".format(p.percentage) }}%{% endif %}</span>
+				{% if p.days %}<span class="payment-when">a los {{ p.days }} día(s) de la firma</span>{% endif %}
 			</td>
-			<td>
-				<span class="payment-label">50% Recepción del Proyecto</span>
-				<span class="payment-amount">{{ doc.get_formatted("payment_reception_amount") }}</span>
+			<td class="payment-amount-cell">
+				<span class="payment-amount">{{ frappe.utils.fmt_money(p.amount or 0) }}</span>
 			</td>
 		</tr>
+	{% else %}
+		<tr><td class="payment-empty" colspan="2">No se han definido condiciones de pago.</td></tr>
+	{% endfor %}
 	</table>
 </div>
 {% else %}

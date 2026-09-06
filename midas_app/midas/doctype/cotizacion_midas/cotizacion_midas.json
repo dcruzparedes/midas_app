@@ -19,8 +19,9 @@
   "proposal_date",
   "project_location",
   "project_department",
-  "tariff_type",
-  "voltage_type",
+   "tariff_type",
+   "tariff_rate",
+   "voltage_type",
   "commissioning_months",
   "section_consumo",
   "monthly_consumption",
@@ -142,14 +143,22 @@
    "label": "Departamento",
    "options": "Atlántida\nCholuteca\nColón\nComayagua\nCopán\nCortés\nEl Paraíso\nFrancisco Morazán\nGracias a Dios\nIntibucá\nIslas de la Bahía\nLa Paz\nLempira\nOcotepeque\nOlancho\nSanta Bárbara\nValle\nYoro"
   },
-  {
-   "fieldname": "tariff_type",
-   "fieldtype": "Select",
-   "label": "Tarifa Eléctrica",
-   "options": "Residencial\nBaja Tensión\nMedia Tensión\nAlta Tensión"
-  },
-  {
-   "fieldname": "voltage_type",
+   {
+    "fieldname": "tariff_type",
+    "fieldtype": "Select",
+    "label": "Tarifa Eléctrica",
+    "options": "Residencial\nBaja Tensión\nMedia Tensión\nAlta Tensión",
+    "reqd": 1
+   },
+   {
+    "fieldname": "tariff_rate",
+    "fieldtype": "Float",
+    "label": "Tarifa Manual ($/kWh)",
+    "precision": "4",
+    "reqd": 1
+   },
+   {
+    "fieldname": "voltage_type",
    "fieldtype": "Select",
    "label": "Voltaje",
    "options": "Trifásico\nMonofásico"

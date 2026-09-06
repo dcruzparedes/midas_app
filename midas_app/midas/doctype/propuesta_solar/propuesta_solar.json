@@ -19,8 +19,9 @@
   "monthly_consumption",
   "annual_consumption",
   "peak_demand",
-  "tariff_type",
-  "voltage_type",
+   "tariff_type",
+   "tariff_rate",
+   "voltage_type",
   "desired_savings",
   "section_panel",
   "panel_power",
@@ -62,11 +63,10 @@
   "warranties",
   "considerations",
   "exclusions",
-  "section_pago",
-  "total_project_price",
-  "payment_acceptance_amount",
-  "payment_reception_amount",
-  "payment_conditions"
+   "section_pago",
+   "total_project_price",
+   "payment_schedule",
+   "payment_conditions"
  ],
  "fields": [
   {
@@ -137,14 +137,22 @@
    "fieldtype": "Float",
    "label": "Pico de Demanda (kW)"
   },
-  {
-   "fieldname": "tariff_type",
-   "fieldtype": "Select",
-   "label": "Tarifa Eléctrica",
-   "options": "Residencial\nBaja Tensión\nMedia Tensión\nAlta Tensión"
-  },
-  {
-   "fieldname": "voltage_type",
+   {
+    "fieldname": "tariff_type",
+    "fieldtype": "Select",
+    "label": "Tarifa Eléctrica",
+    "options": "Residencial\nBaja Tensión\nMedia Tensión\nAlta Tensión",
+    "reqd": 1
+   },
+   {
+    "fieldname": "tariff_rate",
+    "fieldtype": "Float",
+    "label": "Tarifa Manual ($/kWh)",
+    "precision": "4",
+    "reqd": 1
+   },
+   {
+    "fieldname": "voltage_type",
    "fieldtype": "Select",
    "label": "Voltaje",
    "options": "Trifásico\nMonofásico"
@@ -203,20 +211,18 @@
    "read_only": 1,
    "precision": "2"
   },
-  {
-   "fieldname": "energy_injected",
-   "fieldtype": "Float",
-   "label": "Energía Inyectada (kWh)",
-   "read_only": 1,
-   "precision": "2"
-  },
-  {
-   "fieldname": "energy_self_consumed",
-   "fieldtype": "Float",
-   "label": "Energía Autoconsumida (kWh)",
-   "read_only": 1,
-   "precision": "2"
-  },
+   {
+    "fieldname": "energy_injected",
+    "fieldtype": "Float",
+    "label": "Energía Inyectada (kWh)",
+    "precision": "2"
+   },
+   {
+    "fieldname": "energy_self_consumed",
+    "fieldtype": "Float",
+    "label": "Energía Autoconsumida (kWh)",
+    "precision": "2"
+   },
   {
    "fieldname": "coverage_pct",
    "fieldtype": "Percent",
@@ -401,25 +407,19 @@
    "fieldtype": "Section Break",
    "label": "Condiciones de Pago y Aceptación de Oferta"
   },
-  {
-   "fieldname": "total_project_price",
-   "fieldtype": "Currency",
-   "label": "Precio Total del Proyecto (USD)"
-  },
-  {
-   "fieldname": "payment_acceptance_amount",
-   "fieldtype": "Currency",
-   "label": "50% al Aceptar la Oferta (USD)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "payment_reception_amount",
-   "fieldtype": "Currency",
-   "label": "50% a la Recepción del Proyecto (USD)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "payment_conditions",
+   {
+    "fieldname": "total_project_price",
+    "fieldtype": "Currency",
+    "label": "Precio Total del Proyecto (USD)"
+   },
+   {
+    "fieldname": "payment_schedule",
+    "fieldtype": "Table",
+    "label": "Condiciones de Pago",
+    "options": "Propuesta Pago"
+   },
+   {
+    "fieldname": "payment_conditions",
    "fieldtype": "Small Text",
    "label": "Notas Adicionales de Pago (opcional)"
   }

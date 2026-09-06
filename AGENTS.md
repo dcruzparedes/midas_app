@@ -63,7 +63,7 @@ apps/midas_app/
 │   │   ├── solar_calc.py        # compute_solar_metrics (fórmulas de cálculo)
 │   │   ├── charts.py            # generación de gráficas SVG (line/bar/pie/donut)
 │   │   └── doctype/             # cliente, compania, cotizacion_midas(+_item/_tax),
-│   │                            # equipo, servicio, propuesta_solar(+_equipo/_consumo_mensual/_flujo_caja/_perfil_horario)
+│   │                            # equipo, servicio, propuesta_solar(+_equipo/_consumo_mensual/_flujo_caja/_perfil_horario/_pago)
 │   ├── public/images/           # logo_midas.jpg
 │   ├── templates/print_formats/ # propuesta_solar.html (fuente del Print Format)
 │   └── workspace_sidebar/       # midas.json
@@ -76,10 +76,11 @@ apps/midas_app/
 
 ## Lógica central (léela antes de tocar cálculos)
 
-- `midas_app/midas/solar_calc.py::compute_solar_metrics(doc)` — usado por **ambos** `Cotizacion Midas` y `Propuesta Solar`. Contiene `DEPARTMENT_KWH_PER_KWP` (18 departamentos de Honduras), `TARIFF_LPS_PER_KWH`, `TARIFF_USD_PER_KWH`, `DC_TO_AC_RATIO = 1.25`, `EXCHANGE_RATE = 26.8255`.
+- `midas_app/midas/solar_calc.py::compute_solar_metrics(doc)` — usado por **ambos** `Cotizacion Midas` y `Propuesta Solar`. Contiene `DEPARTMENT_KWH_PER_KWP` (18 departamentos de Honduras), `TARIFF_LPS_PER_KWH`, `TARIFF_USD_PER_KWH`, `DC_TO_AC_RATIO = 1.25`, `EXCHANGE_RATE = 26.8255`. Si `doc.tariff_rate` (Tarifa Manual, $/kWh) tiene valor, se usa en vez de la tarifa según `tariff_type`.
 - `midas_app/midas/charts.py` — `ensure_chart_data(doc)` rellena los child tables (`consumo_mensual`, `perfil_horario`, `flujo_caja`) con datos por defecto si están vacíos; `get_proposal_charts(doc)` devuelve las gráficas.
 - `propuesta_solar.py` expone whitelisted: `get_quotation_data`, `download_proposal_pdf` (WeasyPrint), `download_proposal_word` (python-docx).
-- Los campos `npv`, `irr`, `energy_injected`, `energy_self_consumed`, `injection_pct` **existen en el Doctype pero NO están calculados todavía** (solo se leen en el export a Word). No asumir que tienen valor.
+- Los campos `npv`, `irr`, `injection_pct` **existen en el Doctype pero NO están calculados todavía** (solo se leen en el export). No asumir que tienen valor. `energy_injected` y `energy_self_consumed` son **editables** (cálculo externo, el usuario los ingresa).
+- Las condiciones de pago son la tabla hija `Propuesta Pago` (campo `payment_schedule`): `concepto`, `porcentaje`, `plazo en días` y `monto` calculado (`total * %`). Reemplazó los campos fijos 50/50 (`payment_acceptance_amount` / `payment_reception_amount`).
 
 ## Gotchas (cosas que un agente fallaría sin ayuda)
 

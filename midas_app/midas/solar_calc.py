@@ -42,7 +42,7 @@ EXCHANGE_RATE = 26.8255
 
 def compute_solar_metrics(doc):
 	kwh_per_kwp = DEPARTMENT_KWH_PER_KWP.get(doc.project_department) or 0
-	tariff_usd = TARIFF_USD_PER_KWH.get(doc.tariff_type) or 0
+	tariff_usd = doc.get("tariff_rate") or TARIFF_USD_PER_KWH.get(doc.tariff_type) or 0
 
 	monthly = doc.monthly_consumption or 0
 	savings = doc.desired_savings or 0

@@ -36,8 +36,8 @@ class PropuestaSolar(Document):
 
 	def update_payment_terms(self):
 		total = self.total_project_price or 0
-		self.payment_acceptance_amount = total * 0.5
-		self.payment_reception_amount = total * 0.5
+		for row in self.payment_schedule:
+			row.amount = total * (row.percentage or 0) / 100
 
 	def calculate_equipment_power(self):
 		for row in self.equipment:
@@ -64,6 +64,7 @@ def get_quotation_data(quotation_name):
 		"project_location",
 		"project_department",
 		"tariff_type",
+		"tariff_rate",
 		"voltage_type",
 		"commissioning_months",
 		"monthly_consumption",
@@ -436,7 +437,11 @@ def _build_proposal_docx(doc):
 			("Consumo Anual", f"{_fmt_num(doc.annual_consumption)} kWh"),
 			("Consumo promedio mensual", f"{_fmt_num(doc.monthly_consumption)} kWh"),
 			("Pico de demanda", f"{_fmt_num(doc.peak_demand)} kW"),
-			("Tarifa", doc.tariff_type),
+			(
+				"Tarifa",
+				(doc.tariff_type or "")
+				+ (f" — {_fmt_num(doc.tariff_rate, 4)} $/kWh" if doc.tariff_rate else ""),
+			),
 		]
 	)
 
@@ -510,25 +515,44 @@ def _build_proposal_docx(doc):
 		r2.font.size = Pt(16)
 		r2.font.color.rgb = NAVY
 
-		amounts_row = box.add_row()
-		labels = ["50% AL ACEPTAR LA OFERTA", "50% RECEPCIÓN DEL PROYECTO"]
-		amounts = [
-			doc.get_formatted("payment_acceptance_amount"),
-			doc.get_formatted("payment_reception_amount"),
-		]
-		for i, cell in enumerate(amounts_row.cells):
+		if doc.payment_schedule:
+			for p in doc.payment_schedule:
+				row = box.add_row()
+				lc, rc = row.cells
+				lc.width = Inches(4.5)
+				rc.width = Inches(2.2)
+
+				pl = lc.paragraphs[0]
+				r_label = pl.add_run(p.label or "Pago")
+				r_label.font.bold = True
+				r_label.font.color.rgb = NAVY
+				r_label.font.size = Pt(11)
+
+				detail = []
+				if p.percentage is not None:
+					detail.append(f"{p.percentage:g}% del total")
+				if p.days:
+					detail.append(f"a los {p.days} día(s)")
+				if detail:
+					pl2 = lc.add_paragraph()
+					r_det = pl2.add_run(" ".join(detail))
+					r_det.font.size = Pt(9)
+					r_det.font.color.rgb = RGBColor(0x66, 0x66, 0x66)
+
+				pr = rc.paragraphs[0]
+				pr.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+				r_amt = pr.add_run(frappe.utils.fmt_money(p.amount or 0))
+				r_amt.font.bold = True
+				r_amt.font.size = Pt(13)
+				r_amt.font.color.rgb = RGBColor(0xC0, 0x39, 0x2B)
+		else:
+			row = box.add_row()
+			cell = row.cells[0].merge(row.cells[1])
 			pc = cell.paragraphs[0]
 			pc.alignment = WD_ALIGN_PARAGRAPH.CENTER
-			run = pc.add_run(labels[i])
-			run.font.bold = True
-			run.font.color.rgb = NAVY
+			run = pc.add_run("No se han definido condiciones de pago.")
 			run.font.size = Pt(10)
-			pc2 = cell.add_paragraph()
-			pc2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-			run2 = pc2.add_run(amounts[i])
-			run2.font.bold = True
-			run2.font.size = Pt(16)
-			run2.font.color.rgb = RGBColor(0xC0, 0x39, 0x2B)
+			run.font.color.rgb = RGBColor(0x88, 0x88, 0x88)
 
 		box._tbl.tblPr.append(
 			parse_xml(
