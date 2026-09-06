@@ -1,0 +1,83 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_NAMESPACE }}/midas_app
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout frappe_docker
+        uses: actions/checkout@v4
+        with:
+          repository: frappe/frappe_docker
+
+      - name: Generate apps.json
+        run: |
+          cat <<EOF > apps.json
+          [
+            {
+              "url": "https://github.com/dcruzparedes/midas_app",
+              "branch": "main"
+            }
+          ]
+          EOF
+
+      - name: Define image tags
+        id: vars
+        run: echo "tag=$(echo $GITHUB_SHA | cut -c1-7)" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        run: |
+          sudo docker build \
+            --build-arg=FRAPPE_PATH=https://github.com/frappe/frappe \
+            --build-arg=FRAPPE_BRANCH=v16.31.0 \
+            --build-arg=CACHE_BUST="$GITHUB_SHA" \
+            --secret=id=apps_json,src=apps.json \
+            --tag=${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }} \
+            --tag=${{ env.IMAGE_NAME }}:latest \
+            --file=images/layered/Containerfile .
+
+      - name: Agregar dependencias de impresión (pango/cairo)
+        run: |
+          cat <<'EOF' > Dockerfile.extra
+          FROM ${{ env.IMAGE_NAME }}:latest
+          USER root
+          RUN apt-get update && apt-get install -y --no-install-recommends \
+              libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libcairo2 \
+              libpangocairo-1.0-0 libgdk-pixbuf-2.0-0 fonts-dejavu \
+              && rm -rf /var/lib/apt/lists/*
+          USER frappe
+          EOF
+          sudo docker build -f Dockerfile.extra \
+            -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }} \
+            -t ${{ env.IMAGE_NAME }}:latest .
+
+      - name: Login a Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Push Docker Image
+        run: |
+          sudo docker push ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}
+          sudo docker push ${{ env.IMAGE_NAME }}:latest
+
+      - name: Logout de Docker Hub
+        if: always()
+        run: sudo docker logout
+
+      - name: Limpiar apps.json
+        if: always()
+        run: rm -f apps.json
+
+  deploy:
+    needs: build-and-push
+    runs-on: self-hosted
+    steps:
+      - name: Trigger Portainer Webhook
+        run: |
+          curl -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"

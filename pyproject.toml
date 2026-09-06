@@ -8,7 +8,10 @@ requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-    # "frappe~=15.0.0" # Installed and managed by bench.
+    "weasyprint",
+    "python-docx",
+    "cairosvg",
+    "htmldocx",
 ]
 
 [build-system]
@@ -21,7 +24,15 @@ build-backend = "flit_core.buildapi"
 
 # These apt dependencies will be installed from Ubuntu repositories when you host your app on Frappe Cloud
 [deploy.dependencies.apt]
-packages = []
+packages = [
+    "libpango-1.0-0",
+    "libpangoft2-1.0-0",
+    "libharfbuzz0b",
+    "libcairo2",
+    "libpangocairo-1.0-0",
+    "libgdk-pixbuf-2.0-0",
+    "fonts-dejavu",
+]
 
 [tool.ruff]
 line-length = 110

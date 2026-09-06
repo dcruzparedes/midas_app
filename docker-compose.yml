@@ -1,0 +1,130 @@
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb:11.4
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-admin}
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis-cache:
+    image: redis:7
+    restart: unless-stopped
+    command: redis-server --port 13000
+
+  redis-queue:
+    image: redis:7
+    restart: unless-stopped
+    command:
+      - sh
+      - -c
+      - redis-server --port 11000
+
+  crear-sitio:
+    image: ${IMAGE_NAME}:latest
+    restart: "no"
+    entrypoint: ["bash", "-c"]
+    command:
+      - |
+        if [ -f sites/apps.txt ]; then
+          echo "El sitio ya existe. Aplicando migraciones..."
+          bench --site ${SITE_NAME} migrate
+          exit 0
+        fi
+        echo "Creando nuevo sitio..."
+        bench new-site ${SITE_NAME} \
+          --admin-password ${ADMIN_PASSWORD} \
+          --mariadb-root-password ${DB_ROOT_PASSWORD} \
+          --db-host mariadb \
+          --no-mariadb-socket
+        bench --site ${SITE_NAME} install-app midas_app
+        bench --site ${SITE_NAME} set-config developer_mode 0
+    environment:
+      SITE_NAME: ${SITE_NAME:-devops-midasgdp.rdtech.lat}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-admin}
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis-cache:
+        condition: service_started
+      redis-queue:
+        condition: service_started
+
+  backend:
+    image: ${IMAGE_NAME}:latest
+    restart: unless-stopped
+    command: bench serve --port 8000
+    environment:
+      DB_HOST: mariadb
+      REDIS_CACHE: redis://redis-cache:13000
+      REDIS_QUEUE: redis://redis-queue:11000
+    ports:
+      - "8000:8000"
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    depends_on:
+      crear-sitio:
+        condition: service_completed_successfully
+
+  worker:
+    image: ${IMAGE_NAME}:latest
+    restart: unless-stopped
+    command: bench worker --queue short,default
+    environment:
+      DB_HOST: mariadb
+      REDIS_CACHE: redis://redis-cache:13000
+      REDIS_QUEUE: redis://redis-queue:11000
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    depends_on:
+      crear-sitio:
+        condition: service_completed_successfully
+
+  scheduler:
+    image: ${IMAGE_NAME}:latest
+    restart: unless-stopped
+    command: bench schedule
+    environment:
+      DB_HOST: mariadb
+      REDIS_CACHE: redis://redis-cache:13000
+      REDIS_QUEUE: redis://redis-queue:11000
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    depends_on:
+      crear-sitio:
+        condition: service_completed_successfully
+
+  socketio:
+    image: ${IMAGE_NAME}:latest
+    restart: unless-stopped
+    command: node /home/frappe/frappe-bench/apps/frappe/socketio.js
+    environment:
+      DB_HOST: mariadb
+      REDIS_CACHE: redis://redis-cache:13000
+      REDIS_QUEUE: redis://redis-queue:11000
+    ports:
+      - "9000:9000"
+    volumes:
+      - sites:/home/frappe/frappe-bench/sites
+    depends_on:
+      crear-sitio:
+        condition: service_completed_successfully
+
+volumes:
+  mariadb-data:
+  sites:
