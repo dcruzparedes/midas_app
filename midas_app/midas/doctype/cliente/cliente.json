@@ -20,14 +20,14 @@
    "fieldname": "nombre",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Razón Social",
+   "label": "Razón Social (Demo)",
    "reqd": 1,
    "unique": 1
   },
   {
    "fieldname": "rtn",
    "fieldtype": "Data",
-   "label": "RTN"
+   "label": "RTN (DEMO)"
   },
   {
    "fieldname": "column_break_contacto",
