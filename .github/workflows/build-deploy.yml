@@ -19,6 +19,11 @@ jobs:
           repository: frappe/frappe_docker
           ref: v3.2.2
 
+      - name: Checkout midas_app
+        uses: actions/checkout@v4
+        with:
+          path: midas_app_src
+
       - name: Generate apps.json
         run: |
           cat <<EOF > apps.json
@@ -45,20 +50,13 @@ jobs:
             --tag=${{ env.IMAGE_NAME }}:latest \
             --file=images/layered/Containerfile .
 
-      - name: Agregar dependencias de impresión (pango/cairo)
+      - name: Agregar dependencias de impresión
         run: |
-          cat <<'EOF' > Dockerfile.extra
-          FROM ${{ env.IMAGE_NAME }}:latest
-          USER root
-          RUN apt-get update && apt-get install -y --no-install-recommends \
-              libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libcairo2 \
-              libpangocairo-1.0-0 libgdk-pixbuf-2.0-0 fonts-dejavu \
-              && rm -rf /var/lib/apt/lists/*
-          USER frappe
-          EOF
-          sudo docker build -f Dockerfile.extra \
+          sudo docker build \
+            --build-arg=BASE_IMAGE=${{ env.IMAGE_NAME }}:latest \
             -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }} \
-            -t ${{ env.IMAGE_NAME }}:latest .
+            -t ${{ env.IMAGE_NAME }}:latest \
+            -f midas_app_src/Dockerfile midas_app_src
 
       - name: Login a Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
