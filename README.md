@@ -1,33 +1,26 @@
-### MIDAS
+# MIDAS
 
-Generador de Propuestas
+Aplicación de [Frappe](https://frappeframework.com/) para **Corporación Midas** que automatiza la
+generación de **propuestas de sistemas solares fotovoltaicos** bajo el modelo EPC
+(Ingeniería, Procura y Construcción).
 
-### Installation
+## ¿Qué hace?
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+1. El usuario captura la información en una **Cotización Midas** (doctype propio).
+2. Desde la cotización se genera una **Propuesta Solar** con los cálculos técnicos y financieros.
+3. La propuesta incluye **gráficas** y se exporta a **PDF** y **Word**.
 
-```bash
-cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch develop
-bench install-app midas_app
-```
+## Documentación
 
-### Contributing
+- [Descripción del proyecto y estructura](docs/01-descripcion-y-estructura.md)
+- [Instalación y entorno de desarrollo](docs/02-instalacion-y-desarrollo.md)
+- [Despliegue en producción y CI/CD](docs/03-produccion-y-ci-cd.md)
 
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
+## Stack
 
-```bash
-cd apps/midas_app
-pre-commit install
-```
+- Frappe `v16.31.0`
+- Python `>= 3.10`
 
-Pre-commit is configured to use the following tools for checking and formatting your code:
+## Licencia
 
-- ruff
-- eslint
-- prettier
-- pyupgrade
-
-### License
-
-mit
+MIT
