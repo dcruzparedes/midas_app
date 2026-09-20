@@ -5,6 +5,10 @@ app_description = "Generador de Propuestas"
 app_email = "corpmidas33@gmail.com"
 app_license = "mit"
 
+app_logo_url = "/assets/midas_app/images/logo_midas.jpg"
+
+web_include_css = ["/assets/midas_app/css/midas_login.css"]
+
 fixtures = [
 	"Print Format",
 ]

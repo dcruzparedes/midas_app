@@ -1,0 +1,4 @@
+/* Logo del login un poco más grande (solo afecta la página de login) */
+.for-login .page-card-head img.app-logo {
+	max-height: 70px;
+}
