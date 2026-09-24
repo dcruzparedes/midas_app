@@ -37,6 +37,7 @@
 "fieldname": "equipment_type",
      "fieldtype": "Select",
      "fetch_from": "item.tipo_equipo",
+     "fetch_if_empty": 1,
      "label": "Tipo de Equipo",
      "options": "Módulo Fotovoltaico\nInversor\nOtros",
      "in_list_view": 1,
@@ -46,6 +47,7 @@
     "fieldname": "model",
     "fieldtype": "Data",
     "fetch_from": "item.modelo",
+    "fetch_if_empty": 1,
     "label": "Modelo",
     "in_list_view": 1
    },
@@ -53,6 +55,7 @@
     "fieldname": "marca",
     "fieldtype": "Data",
     "fetch_from": "item.marca",
+    "fetch_if_empty": 1,
     "label": "Marca",
     "in_list_view": 1
    },
@@ -66,6 +69,7 @@
 "fieldname": "unit_power",
     "fieldtype": "Float",
     "fetch_from": "item.potencia",
+    "fetch_if_empty": 1,
     "label": "Potencia Unitaria",
     "in_list_view": 1
    },
@@ -73,8 +77,9 @@
 "fieldname": "unit",
     "fieldtype": "Select",
     "fetch_from": "item.unidad",
+    "fetch_if_empty": 1,
     "label": "Unidad",
-    "options": "W\nkW\nWp\nkWac",
+    "options": "W\nWp\nkW\nkWac",
     "in_list_view": 1
    },
   {
@@ -88,7 +93,9 @@
 "fieldname": "voltage",
     "fieldtype": "Data",
     "fetch_from": "item.voltage",
-    "label": "Voltaje"
+    "fetch_if_empty": 1,
+    "label": "Voltaje",
+    "in_list_view": 1
    }
  ],
  "istable": 1,
