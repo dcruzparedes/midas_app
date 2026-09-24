@@ -20,7 +20,7 @@
    "fieldname": "nombre",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Razón Social (Update)",
+   "label": "Razón Social",
    "reqd": 1,
    "unique": 1
   },
